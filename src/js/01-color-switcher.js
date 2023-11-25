@@ -4,6 +4,7 @@ const refs = {
     startButton: document.querySelector("[data-start]"),
     stopButton: document.querySelector("[data-stop]"),
 }
+let intervalId;
 
 refs.startButton.addEventListener("click", colorChangeStart);
 refs.stopButton.addEventListener("click", colorChangeStop);
