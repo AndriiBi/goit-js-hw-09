@@ -1,5 +1,10 @@
+
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
+
+function addLeadingZero(value) {
+  return value.toString().padStart(2, '0');
+}
 
 const refs = {
   startButton: document.querySelector("[data-start]"),
@@ -10,7 +15,7 @@ const refs = {
   secondsElement: document.querySelector("[data-seconds]"),
 };
 
-let timerInterval;
+let intervalId;
 
 const options = {
   enableTime: true,
@@ -19,13 +24,12 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     if (selectedDates[0] && selectedDates[0] > new Date()) {
-        refs.startButton.removeAttribute("disabled");
-      } else {
-        refs.startButton.setAttribute("disabled", "disabled");
-      }
-      console.log(selectedDates[0]);
-    },
-  };
+      refs.startButton.removeAttribute("disabled");
+    } else {
+      refs.startButton.setAttribute("disabled", "disabled");
+    }
+  },
+};
 
 const dateTimePickerInstance = flatpickr(refs.dateTimePicker, options);
 
@@ -39,11 +43,11 @@ function startCountdown() {
     return;
   }
 
-  clearInterval(timerInterval);
+  clearInterval(intervalId);
 
   updateTimer(selectedDate);
 
-  timerInterval = setInterval(() => {
+  intervalId = setInterval(() => {
     updateTimer(selectedDate);
   }, 1000);
 }
@@ -53,20 +57,16 @@ function updateTimer(endDate) {
   const timeRemaining = endDate - now;
 
   if (timeRemaining < 0) {
-    clearInterval(timerInterval);
+    clearInterval(intervalId);
     return;
   }
 
   const { days, hours, minutes, seconds } = convertMs(timeRemaining);
 
-  refs.daysElement.textContent = padZero(days);
-  refs.hoursElement.textContent = padZero(hours);
-  refs.minutesElement.textContent = padZero(minutes);
-  refs.secondsElement.textContent = padZero(seconds);
-}
-
-function padZero(number) {
-  return number < 10 ? `0${number}` : number;
+  refs.daysElement.textContent = addLeadingZero(days);
+  refs.hoursElement.textContent = addLeadingZero(hours);
+  refs.minutesElement.textContent = addLeadingZero(minutes);
+  refs.secondsElement.textContent = addLeadingZero(seconds);
 }
 
 function convertMs(ms) {
@@ -82,9 +82,3 @@ function convertMs(ms) {
 
   return { days, hours, minutes, seconds };
 }
-
-
-
-
-
-
