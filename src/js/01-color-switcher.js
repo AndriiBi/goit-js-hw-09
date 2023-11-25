@@ -1,6 +1,6 @@
 import { getRandomHexColor } from "./helpers";
 
-refs = {
+const refs = {
     startButton: document.querySelector("[data-start]"),
     stopButton: document.querySelector("[data-stop]"),
 }
