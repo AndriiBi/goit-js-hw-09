@@ -12,6 +12,7 @@ refs.stopButton.addEventListener("click", colorChangeStop);
 function colorChangeStart(event) {
 
 refs.startButton.disabled = true;
+refs.stopButton.disabled = false;
 
 intervalId = setInterval(() => {
 const randomColor = getRandomHexColor();
@@ -23,6 +24,7 @@ document.body.style.backgroundColor = randomColor;
 function colorChangeStop(event){
 
 refs.startButton.disabled = false;
+refs.stopButton.disabled = true;
 
 clearInterval(intervalId);
 }

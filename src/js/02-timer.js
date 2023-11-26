@@ -26,6 +26,7 @@ const options = {
     if (selectedDates[0] && selectedDates[0] > new Date()) {
       refs.startButton.removeAttribute("disabled");
     } else {
+      alert("Please choose a date in the future.");
       refs.startButton.setAttribute("disabled", "disabled");
     }
   },
@@ -37,11 +38,6 @@ refs.startButton.addEventListener("click", startCountdown);
 
 function startCountdown() {
   const selectedDate = dateTimePickerInstance.selectedDates[0];
-
-  if (!selectedDate || selectedDate <= new Date()) {
-    alert("Please choose a date in the future.");
-    return;
-  }
 
   clearInterval(intervalId);
 
